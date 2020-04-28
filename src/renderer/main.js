@@ -8,7 +8,7 @@ import store from './store'
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
-// process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+
 /* eslint-disable no-new */
 new Vue({
   components: { App },

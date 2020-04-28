@@ -1,4 +1,4 @@
-# testc5
+# electron-vue
 
 > An electron-vue project
 
@@ -13,6 +13,9 @@ npm run dev
 
 # build electron application for production
 npm run build
+
+# run end-to-end tests
+npm test
 
 
 # lint all JS/Vue component files in `src/`
