@@ -1,12 +1,20 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <Maintitle />
+    <!-- <router-view></router-view> -->
+    <div>123</div>
   </div>
 </template>
 
 <script>
+  import Maintitle from './components/maintitle/maintitle'
   export default {
-    name: 'electron-vue'
+    name: 'electron-vue',
+    components: {
+      Maintitle
+    },
+    methods: {
+    }
   }
 </script>
 
