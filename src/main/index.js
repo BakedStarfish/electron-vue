@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, Tray } from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -11,6 +11,8 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow
+let appTray
+
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -35,8 +37,22 @@ function createWindow () {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
+  setTray()
 }
-
+function setTray () {
+  let trayMenuTemplate = [{
+    label: '退出',
+    click: function () {}
+  }]
+  let iconPath = require('path').join(__dirname, '../../build/icons/icon.ico')
+  appTray = new Tray(iconPath)
+  const contextMenu = Menu.buildFromTemplate(trayMenuTemplate)
+  appTray.setToolTip('notePad')
+  appTray.setContextMenu(contextMenu)
+  appTray.on('click', function () {
+    mainWindow.show()
+  })
+}
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
@@ -50,11 +66,18 @@ app.on('activate', () => {
     createWindow()
   }
 })
-ipcMain.on('close', e => mainWindow.close())
 
-ipcMain.on('max', e => mainWindow.maximize())
+ipcMain.on('close', function () {
+  mainWindow.hide()
+})
+ipcMain.on('max', function () {
+  mainWindow.maximize()
+})
+ipcMain.on('small', e => mainWindow.unmaximize())
 
-ipcMain.on('min', e => mainWindow.minimize())
+ipcMain.on('min', function () {
+  mainWindow.minimize()
+})
 
 /**
  * Auto Updater

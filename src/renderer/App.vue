@@ -8,6 +8,7 @@
 
 <script>
   import Maintitle from './components/maintitle/maintitle'
+  import './assets/css/common.css'
   export default {
     name: 'electron-vue',
     components: {

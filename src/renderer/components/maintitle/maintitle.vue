@@ -1,9 +1,9 @@
 <template>
     <div id="maintitle">
-      <div class="maintitle">
-        <div class="closebtn" @click="testfn('close')">X</div>
-        <div class="closebtn" @click="testfn('max')">X</div>
-        <div class="closebtn" @click="testfn('min')">X</div>
+      <div class="maintitle-console">
+        <div class="closebtn" @click="testfn('min')">-</div>
+        <div class="closebtn iconfont" @click="testfn('max')">&#xe667;</div>
+        <div class="closebtn iconfont" @click="testfn('close')">&#xe747;</div>
       </div>
     </div>
 </template>
@@ -11,10 +11,18 @@
 <script>
   const {ipcRenderer: ipc} = require('electron')
   export default {
+    data () {
+      return {
+        ismax: 'max'
+      }
+    },
     name: 'Maintitle',
     methods: {
       testfn: function (e) {
         ipc.send(e)
+        if (e === 'max') {
+          data.ismax = 'small'
+        }
       }
     }
   }
@@ -24,15 +32,23 @@
     #maintitle {
         width: 100%;
         height: 52px;
-        background-color: #454a60;
+        background-color: #212633;
         -webkit-app-region: drag;/* 可拖动 */
         position: relative;
     }
+    .maintitle-console{
+      position: absolute; 
+      right: 0px;
+      top: 0px;
+      -webkit-app-region: no-drag;
+    }
     .closebtn{
-      z-index: 999999;
-      -webkit-app-region: no-drag;/* 可拖动 */
-      /* position: absolute; */
-      /* left: 0px;
-      top: 0px; */
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: #454a60;
+      color: #c5cde7;
+      line-height: 20px;
+      text-align: center;
     }
 </style>
